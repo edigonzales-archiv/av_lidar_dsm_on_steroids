@@ -6,6 +6,14 @@ This README would normally document whatever steps are necessary to get your app
  
 ### Get the data ###
 
+```
+#!bash
+wget -r -nH -np -R index.html --cut-dirs=5 http://maps.zh.ch/download/hoehen/2014/dtm/tif/
+wget -r -nH -np -R index.html --cut-dirs=5 http://maps.zh.ch/download/hoehen/2014/dom/tif/
+```
+
+There is already a tileindex shapefile and a vrt file which are also downloaded by `wget`.
+
 
 ### What is this repository for? ###
 
