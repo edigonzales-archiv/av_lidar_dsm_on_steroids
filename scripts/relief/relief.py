@@ -56,6 +56,7 @@ for feature in layer:
     #print cmd
     os.system(cmd)
     
+    # Let QGIS do the colorizing. From my point of view it looks better.
     #infile = outfile
     #outfile = os.path.join(TMP_PATH, "relief_color_" + infile_name)
     #cmd = "/usr/local/gdal/gdal-dev/bin/gdaldem color-relief " + infile +  " ramp_1.txt " + outfile
