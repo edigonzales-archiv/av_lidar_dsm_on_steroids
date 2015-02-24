@@ -12,7 +12,7 @@ TYPE = "DTM"
 OUT_PATH = "/home/stefan/Geodaten/ch/zh/are/hoehen/2014/" + TYPE.lower() + "/relief/50cm/"
 TMP_PATH = "/tmp/" + TYPE.lower() + "/"
 VRT = "/home/stefan/Geodaten/ch/zh/are/hoehen/2014/" + TYPE.lower() + "/grid/50cm/" + TYPE.lower() + "2014.vrt"
-TILEINDEX = "/home/stefan/Geodaten/ch/zh/are/hoehen/2014/" + TYPE.lower() + "/grid/50cm/" + TYPE.lower() + "2014.shp"
+TILEINDEX = "/home/stefan/Projekte/av_lidar_dsm_on_steroids/tileindex/" + TYPE.lower() + "2014.shp"
 BUFFER = 10
 BLOCKSIZE = 256
 
