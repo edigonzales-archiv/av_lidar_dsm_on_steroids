@@ -8,7 +8,7 @@ import sys
 
 ogr.UseExceptions()
 
-TYPE = "DOM"
+TYPE = "DTM"
 OUT_PATH = "/home/stefan/Geodaten/ch/zh/are/hoehen/2014/" + TYPE.lower() + "/relief/50cm/"
 TMP_PATH = "/tmp/" + TYPE.lower() + "/"
 VRT = "/home/stefan/Geodaten/ch/zh/are/hoehen/2014/" + TYPE.lower() + "/grid/50cm/" + TYPE.lower() + "2014.vrt"
@@ -56,11 +56,11 @@ for feature in layer:
     #print cmd
     os.system(cmd)
     
-    infile = outfile
-    outfile = os.path.join(TMP_PATH, "relief_color_" + infile_name)
-    cmd = "/usr/local/gdal/gdal-dev/bin/gdaldem color-relief " + infile +  " ramp_1.txt " + outfile
+    #infile = outfile
+    #outfile = os.path.join(TMP_PATH, "relief_color_" + infile_name)
+    #cmd = "/usr/local/gdal/gdal-dev/bin/gdaldem color-relief " + infile +  " ramp_1.txt " + outfile
     #print cmd
-    os.system(cmd)
+    #os.system(cmd)
 
     infile = outfile
     outfile = os.path.join(OUT_PATH, infile_name)
