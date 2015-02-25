@@ -45,14 +45,14 @@ for feature in layer:
     outfile = os.path.join(TMP_PATH, file_name)
     laz = urllib.URLopener()
     laz.retrieve(URL + file_name, outfile)    
+    #TODO: Catch IOError/Timeout "IOError: [Errno socket error] [Errno 110] Connection timed out"
+
     
-    # We need to use laszip.exe because the liblas utilites do not support laz (10.03 binaries).
+    # We need to use laszip.exe because the liblas utilites do not support laz (Ubuntu 10.04 binaries).
     infile = outfile
     outfile = os.path.join(TMP_PATH, file_name[:-3] + "las")
     cmd = "laszip.exe -i " + infile + " -o " + outfile
     os.system(cmd)
-    
-    #TODO: Catch IOError/Timeout "IOError: [Errno socket error] [Errno 110] Connection timed out"
     
     infile_las = outfile
     outfile = os.path.join(TMP_PATH, file_name[:-4] + "_buildings.las")
