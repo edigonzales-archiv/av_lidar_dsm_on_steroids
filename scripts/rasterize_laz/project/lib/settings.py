@@ -26,6 +26,9 @@ class Settings:
         # blocksize
         self.blocksize = 256
         
+        # dtm/dsm resolution
+        self.resolution = 0.5
+                
     def get_logfile_path(self):
         return os.path.join("./",  "rasterize_laz.log") 
 

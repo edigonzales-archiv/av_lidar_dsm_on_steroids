@@ -1,3 +1,41 @@
-2015-02-25 20:55:31,689 - INFO - Settings: {'tmp_dir': '/tmp/las/', 'url': 'http://maps.zh.ch/download/hoehen/2014/lidar/', 'target_dir': '/tmp/', 'restrict_tile': '6950_2450.laz', 'blocksize': 256, 'tileindex': '/home/stefan/Projekte/av_lidar_dsm_on_steroids/tileindex/lidar2014.shp', 'restrict_class': ''}
-2015-02-25 20:55:31,690 - INFO - Start time is 2015-02-25 20:55:31.690002
-2015-02-25 20:55:52,510 - INFO - Task complete. Overall duration: 0:00:20.820249
+2015-02-26 20:07:03,876 - INFO - Settings: {'tmp_dir': '/tmp/las/', 'url': 'http://maps.zh.ch/download/hoehen/2014/lidar/', 'target_dir': '/tmp/', 'restrict_tile': '', 'blocksize': 256, 'tileindex': '/home/stefan/Projekte/av_lidar_dsm_on_steroids/tileindex/lidar2014.shp', 'restrict_class': ''}
+2015-02-26 20:07:03,876 - INFO - Start time is 2015-02-26 20:07:03.876138
+2015-02-26 20:07:03,878 - INFO - Processing: 6885_2835.laz
+2015-02-26 20:07:03,883 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6885_2835.laz
+2015-02-26 20:07:03,883 - DEBUG - outfile: /tmp/las/6885_2835.laz
+2015-02-26 20:07:03,975 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6885_2835.laz -o /tmp/las/6885_2835_6.las
+2015-02-26 20:07:04,049 - INFO - Processing: 6890_2835.laz
+2015-02-26 20:07:04,055 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6890_2835.laz
+2015-02-26 20:07:04,055 - DEBUG - outfile: /tmp/las/6890_2835.laz
+2015-02-26 20:07:04,746 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6890_2835.laz -o /tmp/las/6890_2835_6.las
+2015-02-26 20:07:05,420 - INFO - Processing: 6895_2835.laz
+2015-02-26 20:07:05,430 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6895_2835.laz
+2015-02-26 20:07:05,430 - DEBUG - outfile: /tmp/las/6895_2835.laz
+2015-02-26 20:07:06,610 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6895_2835.laz -o /tmp/las/6895_2835_6.las
+2015-02-26 20:07:08,835 - INFO - Processing: 6900_2835.laz
+2015-02-26 20:07:08,856 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6900_2835.laz
+2015-02-26 20:07:08,856 - DEBUG - outfile: /tmp/las/6900_2835.laz
+2015-02-26 20:07:11,732 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6900_2835.laz -o /tmp/las/6900_2835_6.las
+2015-02-26 20:07:13,654 - INFO - Processing: 6905_2835.laz
+2015-02-26 20:07:13,667 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6905_2835.laz
+2015-02-26 20:07:13,667 - DEBUG - outfile: /tmp/las/6905_2835.laz
+2015-02-26 20:07:15,502 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6905_2835.laz -o /tmp/las/6905_2835_6.las
+2015-02-26 20:07:17,381 - INFO - Processing: 6910_2835.laz
+2015-02-26 20:07:17,397 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6910_2835.laz
+2015-02-26 20:07:17,397 - DEBUG - outfile: /tmp/las/6910_2835.laz
+2015-02-26 20:07:17,688 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6910_2835.laz -o /tmp/las/6910_2835_6.las
+2015-02-26 20:07:17,798 - INFO - Processing: 6885_2830.laz
+2015-02-26 20:07:17,805 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6885_2830.laz
+2015-02-26 20:07:17,806 - DEBUG - outfile: /tmp/las/6885_2830.laz
+2015-02-26 20:07:21,645 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6885_2830.laz -o /tmp/las/6885_2830_6.las
+2015-02-26 20:07:24,246 - INFO - Processing: 6890_2830.laz
+2015-02-26 20:07:24,255 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6890_2830.laz
+2015-02-26 20:07:24,255 - DEBUG - outfile: /tmp/las/6890_2830.laz
+2015-02-26 20:07:32,116 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6890_2830.laz -o /tmp/las/6890_2830_6.las
+2015-02-26 20:07:35,129 - INFO - Processing: 6895_2830.laz
+2015-02-26 20:07:35,143 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6895_2830.laz
+2015-02-26 20:07:35,144 - DEBUG - outfile: /tmp/las/6895_2830.laz
+2015-02-26 20:07:40,190 - DEBUG - cmd: las2las --keep-classes 6 -i /tmp/las/6895_2830.laz -o /tmp/las/6895_2830_6.las
+2015-02-26 20:07:40,864 - INFO - Processing: 6900_2830.laz
+2015-02-26 20:07:40,872 - DEBUG - url: http://maps.zh.ch/download/hoehen/2014/lidar/6900_2830.laz
+2015-02-26 20:07:40,872 - DEBUG - outfile: /tmp/las/6900_2830.laz
