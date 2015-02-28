@@ -28,7 +28,6 @@ def keep_class_in_file(las_class, file_name):
     return outfile
     
 def convert_file_to_shapefile(file_name):
-    print file_name
     outfile = file_name[:-4] + ".shp"
     cmd = "las2ogr -i " + file_name + " -o " + outfile + " -f 'ESRI Shapefile'"
     logging.debug("cmd: " + cmd)    
@@ -44,22 +43,66 @@ def rasterize_shapefile(file_name, resolution, x_min, y_min, x_max, y_max):
     logging.debug("Size of raster: " + str(px) + " " +str(py))
         
     layer_name = ntpath.basename(file_name)[:-4]
-    outfile = file_name[:-4] + ".tif"
+    outfile_wrong_georef = file_name[:-4] + "_wrong_georef.tif"
     
-    cmd = "gdal_grid -a_srs epsg:21781 -a nearest:radius1=" + str(resolution)
-    cmd +=":radius2=" + str(resolution) + ":nodata=-9999 -txe " + str(x_min) + " " + str(x_max) 
+    cmd = "gdal_grid -a_srs EPSG:21781 -a nearest:radius1=" + str(1)
+    cmd +=":radius2=" + str(1) + "nodata=0 -txe " + str(x_min) + " " + str(x_max) 
     cmd += " -tye " +str(y_min) + " " + str(y_max) + " -outsize " + str(px) + " " + str(py) 
-    cmd += " -of GTiff -ot Float32 -l " + layer_name + " " + file_name + " " + outfile 
+    cmd += " -of GTiff -ot Float32 -l " + layer_name + " " + file_name + " " + outfile_wrong_georef 
     cmd += " --config GDAL_NUM_THREADS ALL_CPUS"
     logging.debug("cmd: " + cmd)    
-    #os.system(cmd)
-    print cmd
+    os.system(cmd)
+    
+    # Fix wrong metadata (switched bbox coordinates)?
+    # And we can also set nodata to 0.
+    outfile = file_name[:-4] + ".tif"
+    cmd = "gdalwarp -s_srs EPSG:21781 -t_srs EPSG:21781 -srcnodata 0 -dstnodata 0" 
+    cmd += " " + outfile_wrong_georef + " " + outfile
+    logging.debug("cmd: " + cmd)    
+    os.system(cmd)
+
     return outfile
 
-def normalize_dsm(dsm_file_name, dtm_file_name):
-    pass
+def normalize_dsm(dsm_file_name, dtm_vrt, resolution, x_min, y_min, x_max, y_max):
+    # Ok, this one was hard to figure out the correct settings with nodata. I think one 
+    # problem is that gdal_grid does not proper set nodata value?
+    
+    # gdal_calc.py needs rasters of the same dimension. 
+    # -> Create 500x500m tif files from dtm vrt.
+    dtm_file_name = dsm_file_name[:-4] + "_dtm.tif"
+    cmd = "gdalwarp -s_srs EPSG:21781 -t_srs EPSG:21781 -te "  + str(x_min) + " " +  str(y_min) + " " +  str(x_max) + " " +  str(y_max)
+    cmd += " -tr 0.5 0.5 -wo NUM_THREADS=ALL_CPUS -co 'TILED=YES' -co 'PROFILE=GeoTIFF'"
+    cmd += " -co 'INTERLEAVE=BAND' -co 'COMPRESS=DEFLATE' -srcnodata -3.40282346638529011e+38 -dstnodata 0"
+    cmd += " -r bilinear " + dtm_vrt + " " + dtm_file_name
+    logging.debug("cmd: " + cmd)
+    os.system(cmd)
+    
+    outfile = dsm_file_name[:-4] + "_normalized.tif"
+    
+    cmd = "gdal_calc.py --overwrite"
+    cmd += " -A " + dsm_file_name + " -B " + dtm_file_name + " --outfile " + outfile
+    cmd += " --calc=\"0*((A-B)<0.1) + (A-B)*((A-B)>0.1)\""
+    #cmd += " --calc=\"(A-B)\""
+    cmd += " --NoDataValue=0 --co 'TILED=YES' --co 'PROFILE=GeoTIFF'"
+    cmd += " --co 'INTERLEAVE=BAND' --co 'COMPRESS=DEFLATE'" 
+    logging.debug("cmd: " + cmd)    
+    os.system(cmd)
 
+    cmd = "gdaladdo -r average "
+    cmd += "--config COMPRESS_OVERVIEW DEFLATE " 
+    cmd += outfile + " 2 4 8 16 32 64 128"
+    logging.debug("cmd: " + cmd)    
+    os.system(cmd)
+    
+    return outfile
 
+def create_relief(file_name):
+    outfile = file_name[:-4] + "_relief.tif"
+    cmd = "gdaldem hillshade -alt 60 -az 270 -compute_edges " + file_name + " " + outfile
+    logging.debug("cmd: " + cmd)    
+    os.system(cmd)
+    
+    return outfile
 
 if __name__ == '__main__':    
     # read the options and arguments from the command line / and some more settings
@@ -70,6 +113,7 @@ if __name__ == '__main__':
     tmp_dir = my_settings.tmp_dir
     url = my_settings.url
     resolution = my_settings.resolution
+    dtm_vrt = my_settings.dtm_vrt
     
     # configure logging
     FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
@@ -88,11 +132,13 @@ if __name__ == '__main__':
 
     for feature in layer:
         file_name = feature.GetField('dateiname')
-        logging.info("Processing: " + file_name)
+        logging.debug("Tile: " + file_name)
         print "**********************: " + file_name
         
         if restrict_tile and file_name <> restrict_tile:
             continue
+            
+        logging.debug("Processing: " + file_name)
             
 #        if restrict_tile and file_name == restrict_tile:
  #           print "found"
@@ -106,12 +152,12 @@ if __name__ == '__main__':
         y_min = int(env[2] + 0.001)
         x_max = int(env[1] + 0.001)
         y_max = int(env[3] + 0.001)
+        
+        logging.debug("x_min" + "x_min")
+        logging.debug("y_min" + "y_min")
+        logging.debug("x_max" + "x_max")
+        logging.debug("y_max" + "y_max")
     
-        print x_min 
-        print y_min
-        print x_max
-        print y_max
-
         # For lack of space we just create and delete a temporary directory.
         # in every loop.
         cmd = "rm -rf " + tmp_dir
@@ -126,10 +172,15 @@ if __name__ == '__main__':
             logging.error(e)
             print e
             continue
+            
+        
+        #TODO: Alles in eine Funktion packen. Parameter in ein dict.
         
         outfile_keep_class = keep_class_in_file(6, outfile_las)
         outfile_shp = convert_file_to_shapefile(outfile_keep_class)
-        outfile_tif = rasterize_shapefile(outfile_shp, resolution, x_min, y_min, x_max, y_max)
+        outfile_dsm = rasterize_shapefile(outfile_shp, resolution, x_min, y_min, x_max, y_max)
+        outfile_dsm_normalized = normalize_dsm(outfile_dsm, dtm_vrt, resolution, x_min, y_min, x_max, y_max)
+        outfile_dsm_relief = create_relief(outfile_dsm)
         
         break
         

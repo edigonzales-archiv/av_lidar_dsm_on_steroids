@@ -20,6 +20,9 @@ class Settings:
         # temporary directory
         self.tmp_dir = "/tmp/las/"
         
+        # dtm vrt
+        self.dtm_vrt = "/home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dtm/grid/50cm/dtm2014.vrt"
+        
         # tileindex
         self.tileindex =  "/home/stefan/Projekte/av_lidar_dsm_on_steroids/tileindex/lidar2014.shp"
         
