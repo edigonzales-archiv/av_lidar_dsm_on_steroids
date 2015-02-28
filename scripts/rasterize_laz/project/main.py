@@ -5,6 +5,7 @@ import logging
 import time
 import datetime
 import urllib
+import ntpath
 from osgeo import ogr
 from osgeo import osr
 
@@ -30,17 +31,34 @@ def convert_file_to_shapefile(file_name):
     print file_name
     outfile = file_name[:-4] + ".shp"
     cmd = "las2ogr -i " + file_name + " -o " + outfile + " -f 'ESRI Shapefile'"
+    logging.debug("cmd: " + cmd)    
     os.system(cmd) 
     return outfile
     
 def rasterize_shapefile(file_name, resolution, x_min, y_min, x_max, y_max):
+    dx = x_max - x_min
+    dy = y_max - y_min
     
-    # px, py können hier berechnet werden.
+    px = dx / resolution
+    py = dy / resolution
+    logging.debug("Size of raster: " + str(px) + " " +str(py))
+        
+    layer_name = ntpath.basename(file_name)[:-4]
+    outfile = file_name[:-4] + ".tif"
     
-    cmd = "gdal_grid -a_srs epsg:21781 -a nearest:radius1="+str(resolution)
-    cmd +=":radius2="+str(resolution)+":nodata=-9999 -txe " + str(minX) + " " + str(maxX+1) + " -tye " +str(minY) + " " + str(maxY) + " -outsize " + str(px) + " " + str(py) + " -of GTiff -ot Float32 -l dtm_xyz " + DTM_DIR + "dtm_xyz.vrt " + DTM_DIR + dtm_base_name + "_tmp_wrong_nodata.tif"
-    print cmd
+    cmd = "gdal_grid -a_srs epsg:21781 -a nearest:radius1=" + str(resolution)
+    cmd +=":radius2=" + str(resolution) + ":nodata=-9999 -txe " + str(x_min) + " " + str(x_max) 
+    cmd += " -tye " +str(y_min) + " " + str(y_max) + " -outsize " + str(px) + " " + str(py) 
+    cmd += " -of GTiff -ot Float32 -l " + layer_name + " " + file_name + " " + outfile 
+    cmd += " --config GDAL_NUM_THREADS ALL_CPUS"
+    logging.debug("cmd: " + cmd)    
     #os.system(cmd)
+    print cmd
+    return outfile
+
+def normalize_dsm(dsm_file_name, dtm_file_name):
+    pass
+
 
 
 if __name__ == '__main__':    
@@ -91,7 +109,9 @@ if __name__ == '__main__':
     
         print x_min 
         print y_min
-        
+        print x_max
+        print y_max
+
         # For lack of space we just create and delete a temporary directory.
         # in every loop.
         cmd = "rm -rf " + tmp_dir
@@ -109,7 +129,9 @@ if __name__ == '__main__':
         
         outfile_keep_class = keep_class_in_file(6, outfile_las)
         outfile_shp = convert_file_to_shapefile(outfile_keep_class)
-        outfile_tif = rasterize_shapefile(file_name, resolution, x_min, y_min, x_max, y_max)
+        outfile_tif = rasterize_shapefile(outfile_shp, resolution, x_min, y_min, x_max, y_max)
+        
+        break
         
     overall_duration = datetime.datetime.now() - starttime
     logging.info("Task complete. Overall duration: " + str(overall_duration))
