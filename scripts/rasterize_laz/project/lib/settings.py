@@ -10,17 +10,20 @@ class Settings:
         
         # restrict class
         self.restrict_class = opts.restrict_class
-        
-        # target dir
-        self.target_dir = opts.target_dir
-        
+                
         # URL
         self.url  = "http://maps.zh.ch/download/hoehen/2014/lidar/"
         
         # temporary directory
         self.tmp_dir = "/tmp/las/"
         
+        # target dir
+        self.target_dir = "/home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/"
+        
         # dtm vrt
+        self.dtm_vrt = "/home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dtm/grid/50cm/dtm2014.vrt"
+        
+        # target
         self.dtm_vrt = "/home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dtm/grid/50cm/dtm2014.vrt"
         
         # tileindex

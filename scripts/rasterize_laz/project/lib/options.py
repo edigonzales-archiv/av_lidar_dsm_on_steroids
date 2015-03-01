@@ -23,13 +23,5 @@ class Options:
                                 dest ='restrict_class',
                                 help = 'Only create the tile of the specified class.')
 
-        self.parser.add_argument('-t',
-                                '--target_dir',
-                                action = 'store',
-                                type = str, 
-                                default ='/tmp/',
-                                dest ='target_dir',
-                                help = 'Directory to move the finished tiles to.')
-
     def parse(self, args=None):
         return self.parser.parse_args(args)

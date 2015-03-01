@@ -21,6 +21,8 @@ def download_file(url, outfile):
     laz.retrieve(url, outfile)    
 
 def keep_class_in_file(las_class, file_name):
+    logging.debug("keep only class: " + str(las_class))
+    
     outfile = file_name[:-4] + "_" + str(las_class) + ".las"
     cmd = "las2las --keep-classes " + str(las_class) + " -i " + file_name + " -o " + outfile
     logging.debug("cmd: " + cmd)
@@ -28,6 +30,8 @@ def keep_class_in_file(las_class, file_name):
     return outfile
     
 def convert_file_to_shapefile(file_name):
+    logging.debug("convert las to shapefile")    
+    
     outfile = file_name[:-4] + ".shp"
     cmd = "las2ogr -i " + file_name + " -o " + outfile + " -f 'ESRI Shapefile'"
     logging.debug("cmd: " + cmd)    
@@ -35,6 +39,8 @@ def convert_file_to_shapefile(file_name):
     return outfile
     
 def rasterize_shapefile(file_name, resolution, x_min, y_min, x_max, y_max):
+    logging.debug("rasterize shapefile")
+    
     dx = x_max - x_min
     dy = y_max - y_min
     
@@ -63,7 +69,8 @@ def rasterize_shapefile(file_name, resolution, x_min, y_min, x_max, y_max):
 
     return outfile
 
-def normalize_dsm(dsm_file_name, dtm_vrt, resolution, x_min, y_min, x_max, y_max):
+def normalize_dsm(las_class, dsm_file_name, target_dir, dtm_vrt, resolution, x_min, y_min, x_max, y_max):
+    logging.debug("normalize dsm")    
     # Ok, this one was hard to figure out the correct settings with nodata. I think one 
     # problem is that gdal_grid does not proper set nodata value?
     
@@ -71,14 +78,13 @@ def normalize_dsm(dsm_file_name, dtm_vrt, resolution, x_min, y_min, x_max, y_max
     # -> Create 500x500m tif files from dtm vrt.
     dtm_file_name = dsm_file_name[:-4] + "_dtm.tif"
     cmd = "gdalwarp -s_srs EPSG:21781 -t_srs EPSG:21781 -te "  + str(x_min) + " " +  str(y_min) + " " +  str(x_max) + " " +  str(y_max)
-    cmd += " -tr 0.5 0.5 -wo NUM_THREADS=ALL_CPUS -co 'TILED=YES' -co 'PROFILE=GeoTIFF'"
+    cmd += " -tr " + str(resolution) + " " + str(resolution) + " -wo NUM_THREADS=ALL_CPUS -co 'TILED=YES' -co 'PROFILE=GeoTIFF'"
     cmd += " -co 'INTERLEAVE=BAND' -co 'COMPRESS=DEFLATE' -srcnodata -3.40282346638529011e+38 -dstnodata 0"
     cmd += " -r bilinear " + dtm_vrt + " " + dtm_file_name
     logging.debug("cmd: " + cmd)
     os.system(cmd)
     
     outfile = dsm_file_name[:-4] + "_normalized.tif"
-    
     cmd = "gdal_calc.py --overwrite"
     cmd += " -A " + dsm_file_name + " -B " + dtm_file_name + " --outfile " + outfile
     cmd += " --calc=\"0*((A-B)<0.1) + (A-B)*((A-B)>0.1)\""
@@ -87,22 +93,54 @@ def normalize_dsm(dsm_file_name, dtm_vrt, resolution, x_min, y_min, x_max, y_max
     cmd += " --co 'INTERLEAVE=BAND' --co 'COMPRESS=DEFLATE'" 
     logging.debug("cmd: " + cmd)    
     os.system(cmd)
+    
+    outfile_final = os.path.join(target_dir, "class_" + str(las_class), "grid", ntpath.basename(outfile))
+    cmd = "gdal_translate -a_srs EPSG:21781 -co 'TILED=YES' -co 'INTERLEAVE=BAND' -co 'COMPRESS=DEFLATE' -co 'PREDICTOR=2'"
+    cmd += " " + outfile + " " + outfile_final
+    logging.debug("cmd: " + cmd)        
+    os.system(cmd)
+    
+    cmd = "gdaladdo -r average "
+    cmd += "--config COMPRESS_OVERVIEW DEFLATE " 
+    cmd += outfile_final + " 2 4 8 16 32 64 128"
+    logging.debug("cmd: " + cmd)    
+    os.system(cmd)
 
+    return outfile
+
+def create_relief(las_class, file_name, target_dir):
+    logging.debug("create relief")
+    
+    outfile = os.path.join(target_dir, "class_" + str(las_class), "relief", ntpath.basename(file_name)[:-4] + "_relief.tif")
+    cmd = "gdaldem hillshade -co 'TILED=YES' -co 'INTERLEAVE=BAND' -co 'COMPRESS=DEFLATE' -co 'PREDICTOR=2'" 
+    cmd += " -alt 60 -az 270 -compute_edges " + file_name + " " + outfile
+    logging.debug("cmd: " + cmd) 
+    os.system(cmd)
+    
     cmd = "gdaladdo -r average "
     cmd += "--config COMPRESS_OVERVIEW DEFLATE " 
     cmd += outfile + " 2 4 8 16 32 64 128"
     logging.debug("cmd: " + cmd)    
     os.system(cmd)
-    
+
     return outfile
 
-def create_relief(file_name):
-    outfile = file_name[:-4] + "_relief.tif"
-    cmd = "gdaldem hillshade -alt 60 -az 270 -compute_edges " + file_name + " " + outfile
-    logging.debug("cmd: " + cmd)    
-    os.system(cmd)
+def process_point_cloud(las_class, file_name, paths, raster_parameters, bbox):
+    x_min = bbox['x_min']
+    x_max = bbox['x_max']
+    y_min = bbox['y_min']
+    y_max = bbox['y_max']
     
-    return outfile
+    resolution = raster_parameters['resolution']
+    
+    dtm_vrt = paths['dtm_vrt']
+    target_dir = paths['target_dir']
+    
+    outfile_keep_class = keep_class_in_file(las_class, file_name)
+    outfile_shp = convert_file_to_shapefile(outfile_keep_class)
+    outfile_dsm = rasterize_shapefile(outfile_shp, resolution, x_min, y_min, x_max, y_max)    
+    outfile_dsm_normalized = normalize_dsm(las_class, outfile_dsm, target_dir, dtm_vrt, resolution, x_min, y_min, x_max, y_max)
+    outfile_dsm_relief = create_relief(las_class, outfile_dsm, target_dir)
 
 if __name__ == '__main__':    
     # read the options and arguments from the command line / and some more settings
@@ -111,6 +149,7 @@ if __name__ == '__main__':
     my_settings = Settings(opts)
     restrict_tile = my_settings.restrict_tile
     tmp_dir = my_settings.tmp_dir
+    target_dir = my_settings.target_dir
     url = my_settings.url
     resolution = my_settings.resolution
     dtm_vrt = my_settings.dtm_vrt
@@ -153,13 +192,25 @@ if __name__ == '__main__':
         x_max = int(env[1] + 0.001)
         y_max = int(env[3] + 0.001)
         
+        bbox = {}
+        bbox['x_min'] = x_min
+        bbox['y_min'] = y_min
+        bbox['x_max'] = x_max
+        bbox['y_max'] = y_max
+        
         logging.debug("x_min" + "x_min")
         logging.debug("y_min" + "y_min")
         logging.debug("x_max" + "x_max")
         logging.debug("y_max" + "y_max")
+        
+        paths = {}
+        paths['dtm_vrt'] = dtm_vrt
+        paths['target_dir'] = target_dir
+        
+        raster_parameters = {}
+        raster_parameters['resolution'] = resolution
     
-        # For lack of space we just create and delete a temporary directory.
-        # in every loop.
+        # For lack of space we just create and delete a temporary directory (in every loop).
         cmd = "rm -rf " + tmp_dir
         os.system(cmd)
         cmd = "mkdir " + tmp_dir
@@ -173,17 +224,22 @@ if __name__ == '__main__':
             print e
             continue
             
+        # buildings
+        logging.debug("buildings")
+        process_point_cloud(6, outfile_las, paths, raster_parameters, bbox)
         
-        #TODO: Alles in eine Funktion packen. Parameter in ein dict.
-        
-        outfile_keep_class = keep_class_in_file(6, outfile_las)
-        outfile_shp = convert_file_to_shapefile(outfile_keep_class)
-        outfile_dsm = rasterize_shapefile(outfile_shp, resolution, x_min, y_min, x_max, y_max)
-        outfile_dsm_normalized = normalize_dsm(outfile_dsm, dtm_vrt, resolution, x_min, y_min, x_max, y_max)
-        outfile_dsm_relief = create_relief(outfile_dsm)
-        
-        break
-        
+        # high vegetation
+        logging.debug("high vegetation")
+        process_point_cloud(5, outfile_las, paths, raster_parameters, bbox)
+
+        # medium vegetation
+        logging.debug("medium vegetation")        
+        process_point_cloud(4, outfile_las, paths, raster_parameters, bbox)
+
+        # low vegetation
+        logging.debug("low vegetation")
+        process_point_cloud(3, outfile_las, paths, raster_parameters, bbox)
+
     overall_duration = datetime.datetime.now() - starttime
     logging.info("Task complete. Overall duration: " + str(overall_duration))
     logging.shutdown()
