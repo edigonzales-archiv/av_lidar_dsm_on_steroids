@@ -1,0 +1,78 @@
+
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/relief/7020_2580_6_relief.tif class_6/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/relief/7020_2580_5_relief.tif class_5/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/relief/7020_2580_4_relief.tif class_4/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/relief/7020_2580_3_relief.tif class_3/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/grid/7020_2580_6_normalized.tif class_6/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/grid/7020_2580_5_normalized.tif class_5/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/grid/7020_2580_4_normalized.tif class_4/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/grid/7020_2580_3_normalized.tif class_3/grid/
+
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/relief/7035_2585_6_relief.tif class_6/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/relief/7035_2585_5_relief.tif class_5/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/relief/7035_2585_4_relief.tif class_4/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/relief/7035_2585_3_relief.tif class_3/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/grid/7035_2585_6_normalized.tif class_6/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/grid/7035_2585_5_normalized.tif class_5/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/grid/7035_2585_4_normalized.tif class_4/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/grid/7035_2585_3_normalized.tif class_3/grid/
+
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/relief/7040_2585_6_relief.tif class_6/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/relief/7040_2585_5_relief.tif class_5/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/relief/7040_2585_4_relief.tif class_4/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/relief/7040_2585_3_relief.tif class_3/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/grid/7040_2585_6_normalized.tif class_6/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/grid/7040_2585_5_normalized.tif class_5/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/grid/7040_2585_4_normalized.tif class_4/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/grid/7040_2585_3_normalized.tif class_3/grid/
+
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/relief/7040_2580_6_relief.tif class_6/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/relief/7040_2580_5_relief.tif class_5/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/relief/7040_2580_4_relief.tif class_4/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/relief/7040_2580_3_relief.tif class_3/relief/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_6/grid/7040_2580_6_normalized.tif class_6/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_5/grid/7040_2580_5_normalized.tif class_5/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_4/grid/7040_2580_4_normalized.tif class_4/grid/
+cp /home/stefan/mr_candie_nas/Geodaten/ch/zh/are/hoehen/2014/dsm_on_steroids/class_3/grid/7040_2580_3_normalized.tif class_3/grid/
+
+
+cp class_6/grid/6960_2460_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6960_2455_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6960_2450_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6965_2460_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6965_2455_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6965_2450_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6970_2460_6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6970_2455 6_normalized.tif uster/class_6/grid/
+cp class_6/grid/6970_2450_6_normalized.tif uster/class_6/grid/
+
+
+cp class_5/grid/6960_2460_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6960_2455_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6960_2450_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6965_2460_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6965_2455_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6965_2450_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6970_2460_5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6970_2455 5_normalized.tif uster/class_5/grid/
+cp class_5/grid/6970_2450_5_normalized.tif uster/class_5/grid/
+
+cp class_4/grid/6960_2460_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6960_2455_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6960_2450_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6965_2460_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6965_2455_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6965_2450_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6970_2460_4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6970_2455 4_normalized.tif uster/class_4/grid/
+cp class_4/grid/6970_2450_4_normalized.tif uster/class_4/grid/
+
+cp class_3/grid/6960_2460_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6960_2455_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6960_2450_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6965_2460_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6965_2455_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6965_2450_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6970_2460_3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6970_2455 3_normalized.tif uster/class_3/grid/
+cp class_3/grid/6970_2450_3_normalized.tif uster/class_3/grid/

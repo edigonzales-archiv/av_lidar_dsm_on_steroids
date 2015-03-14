@@ -239,6 +239,9 @@ if __name__ == '__main__':
         # low vegetation
         logging.debug("low vegetation")
         process_point_cloud(3, outfile_las, paths, raster_parameters, bbox)
+        
+        
+        break
 
     overall_duration = datetime.datetime.now() - starttime
     logging.info("Task complete. Overall duration: " + str(overall_duration))

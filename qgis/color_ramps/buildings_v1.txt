@@ -1,0 +1,5 @@
+# QGIS Generated Color Map Export File
+INTERPOLATION:INTERPOLATED
+1.5,204,150,140,255,Custom color map entry
+10,207,107,115,255,Custom color map entry
+20,183,67,76,255,Custom color map entry
